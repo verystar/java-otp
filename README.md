@@ -24,9 +24,9 @@ To demonstrate generating one-time passwords, we'll focus on the TOTP algorithm.
 ```java
 TimeBasedOneTimePasswordGenerator totp = new TimeBasedOneTimePasswordGenerator();
 
-String seed = "OTP-TOKEN-SEED";
+byte[] seed = Base32.decode("OTP-TOKEN-SEED");
 
-SecretKeySpec macKey =new SecretKeySpec(seed.getBytes(), totp.getAlgorithm());
+SecretKeySpec macKey =new SecretKeySpec(seed, totp.getAlgorithm());
 
 Instant now = Instant.now();
 
