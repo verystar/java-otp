@@ -22,38 +22,15 @@ java-otp works with Java 8 or newer. If you need support for versions of Java ol
 To demonstrate generating one-time passwords, we'll focus on the TOTP algorithm. To create a TOTP generator with a default password length (6 digits), time step (30 seconds), and HMAC algorithm (HMAC-SHA1):
 
 ```java
-final TimeBasedOneTimePasswordGenerator totp = new TimeBasedOneTimePasswordGenerator();
-```
+TimeBasedOneTimePasswordGenerator totp = new TimeBasedOneTimePasswordGenerator();
 
-To actually generate time-based one-time passwords, you'll need a key and a timestamp. Secure key management is beyond the scope of this document; for the purposes of an example, though, we'll generate a random key:
+String seed = "OTP-TOKEN-SEED";
 
-```java
-final Key key;
-{
-    final KeyGenerator keyGenerator = KeyGenerator.getInstance(totp.getAlgorithm());
+SecretKeySpec macKey =new SecretKeySpec(seed.getBytes(), totp.getAlgorithm());
 
-    // SHA-1 and SHA-256 prefer 64-byte (512-bit) keys; SHA512 prefers 128-byte (1024-bit) keys
-    keyGenerator.init(512);
+Instant now = Instant.now();
 
-    key = keyGenerator.generateKey();
-}
-```
-
-Armed with a key, we can deterministically generate one-time passwords for any timestamp:
-
-```java
-final Instant now = Instant.now();
-final Instant later = now.plus(totp.getTimeStep());
-
-System.out.format("Current password: %06d\n", totp.generateOneTimePassword(key, now));
-System.out.format("Future password:  %06d\n", totp.generateOneTimePassword(key, later));
-```
-
-…which produces (for one randomly-generated key):
-
-```
-Current password: 164092
-Future password:  046148
+System.out.format("Current password: %06d\n", totp.generateOneTimePassword(macKey, now));
 ```
 
 ## License and copyright
