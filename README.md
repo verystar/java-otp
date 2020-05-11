@@ -38,7 +38,9 @@ System.out.format("Current password: %06d\n", totp.generateOneTimePassword(macKe
 https://totp.app/
 
 1、Input `otp_token` to Secret Key
+
 2、Application Name fill in any string
+
 3、Click Add
 
 
