@@ -33,6 +33,15 @@ Instant now = Instant.now();
 System.out.format("Current password: %06d\n", totp.generateOneTimePassword(macKey, now));
 ```
 
+## Validation tool
+
+https://totp.app/
+
+1、Input `otp_token` to Secret Key
+2、Application Name fill in any string
+3、Click Add
+
+
 ## License and copyright
 
 java-otp is published under the [MIT License](https://opensource.org/licenses/MIT).
